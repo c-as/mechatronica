@@ -1,5 +1,5 @@
 #define PINS_H
-
+#include <util/delay.h>
 
 // Digital pins en directory voor MEGA
 //
@@ -35,6 +35,8 @@
 #define ZOEMERAAN PORTE |= (1 << 5)
 #define ZOEMERUIT PORTE &= ~(1 << 5)
 
+    int groeneLedsKnipperen = 0;
+
 
     int ZetPinDirectories(void)
     {
@@ -47,6 +49,8 @@
 
     int AlleLedsUit(void)
     {
+        groeneLedsKnipperen = 0;
+
         RODELED1UIT;
         RODELED2UIT;
         GROENELED1UIT;
@@ -97,7 +101,7 @@
         RODELED1AAN;
         RODELED2AAN;
 
-        //groen 1 & 2 moeten knipperen
+        groeneLedsKnipperen = 1;
         return 0;
     }
 

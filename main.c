@@ -27,7 +27,15 @@ int main(void)
 
     while(1)
     {
-
+        while(groeneLedsKnipperen)
+    {
+        GROENELED1AAN;
+        GROENELED2AAN;
+        _delay_ms(1000);
+        GROENELED1UIT;
+        GROENELED2UIT;
+        _delay_ms(1000);
+    }
     }
 
     return 0;
