@@ -35,7 +35,7 @@
 #define ZOEMERAAN PORTE |= (1 << 5)
 #define ZOEMERUIT PORTE &= ~(1 << 5)
 
-    int groeneLedsKnipperen = 0;
+    bool groeneLedsKnipperen = false;
 
 
     int ZetPinDirectories(void)
@@ -49,7 +49,7 @@
 
     int AlleLedsUit(void)
     {
-        groeneLedsKnipperen = 0;
+        groeneLedsKnipperen = false;
 
         RODELED1UIT;
         RODELED2UIT;
@@ -101,7 +101,7 @@
         RODELED1AAN;
         RODELED2AAN;
 
-        groeneLedsKnipperen = 1;
+        groeneLedsKnipperen = true;
         return 0;
     }
 
