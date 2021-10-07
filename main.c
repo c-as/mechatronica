@@ -5,22 +5,29 @@
 int main(void)
 {
         ZetPinDirectories();
+
         //brug is dicht doorvaart verboden
         DoorvaartGeslotenBrugMetTegenliggers();
+
         //sensor ziet boot
         //Meld mensen op de brug met zoemer
         ZOEMERAAN;
+
         //als brug vrij is:
         //Zoemer uit
         ZOEMERUIT;
+
         //brug open & lampen brug is bijna open
         DoortvaartBijnaToegestaanLeds();
+
         //als brug open is:
         //lampen voor boot doorvaart:
         DoorvaartToegestaanLeds();
+
         //Sensor ziet dat de boot voorbij is:
         //lampen gestremde doorvaart
         DoorvaartGenaderdenLeds();
+
         //wacht 5 seconden
         //brug dicht & lampen verboden doorvaart
         DoorvaartGeslotenBrugMetTegenliggers();
