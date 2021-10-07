@@ -1,49 +1,62 @@
 #include <avr/io.h>
+#include <stdbool.h>
 #include "pins.h"
+#include "status.h"
 #include <util/delay.h>
+
+void start_brug()
+{
+    while (1)
+    {
+
+        brug();
+    }
+}
 
 int main(void)
 {
     ZetPinDirectories();
 
     //brug is dicht doorvaart verboden
-    DoorvaartGeslotenBrugMetTegenliggers();
+//    DoorvaartGeslotenBrugMetTegenliggers();
 
     //sensor ziet boot
     //Meld mensen op de brug met zoemer
-    ZOEMERAAN;
+//    ZOEMERAAN;
 
     //als brug vrij is:
     //Zoemer uit
-    ZOEMERUIT;
+//    ZOEMERUIT;
 
     //brug open & lampen brug is bijna open
-    DoortvaartBijnaToegestaanLeds();
+//    DoortvaartBijnaToegestaanLeds();
 
     //als brug open is:
     //lampen voor boot doorvaart:
-    DoorvaartToegestaanLeds();
+//    DoorvaartToegestaanLeds();
 
     //Sensor ziet dat de boot voorbij is:
     //lampen gestremde doorvaart
-    DoorvaartGenaderdenLeds();
+//    DoorvaartGenaderdenLeds();
 
     //wacht 5 seconden
     //brug dicht & lampen verboden doorvaart
-    DoorvaartGeslotenBrugMetTegenliggers();
+//    DoorvaartGeslotenBrugMetTegenliggers();
 
-    while (1)
-    {
-        while (groeneLedsKnipperen)
-        {
-            GROENELED1AAN;
-            GROENELED2AAN;
-            _delay_ms(1000);
-            GROENELED1UIT;
-            GROENELED2UIT;
-            _delay_ms(1000);
-        }
-    }
+//    while (1)
+//    {
+//        while (groeneLedsKnipperen)
+//        {
+//            GROENELED1AAN;
+//            GROENELED2AAN;
+//            _delay_ms(1000);
+//            GROENELED1UIT;
+//            GROENELED2UIT;
+//            _delay_ms(1000);
+//        }
+//    }
+
+    start_brug();
 
     return 0;
 }
