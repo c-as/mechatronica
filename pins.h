@@ -38,16 +38,14 @@
     bool groeneLedsKnipperen = false;
 
 
-    int ZetPinDirectories(void)
+    void ZetPinDirectories(void)
     {
         DDRB |= _BV(0) | _BV(1) | _BV(2) | _BV(3);
         DDRL |= _BV(0) | _BV(1);
         DDRE |= _BV(5);
-
-        return 0;
     }
 
-    int AlleLedsUit(void)
+    void AlleLedsUit(void)
     {
         groeneLedsKnipperen = false;
 
@@ -57,22 +55,18 @@
         GROENELED2UIT;
         GELELED2UIT;
         GELELED1UIT;
-
-        return 0;
     }
 
 
-    int DoorvaartVerbodenLeds(void)
+    void DoorvaartVerbodenLeds(void)
     {
         AlleLedsUit();
 
         RODELED1AAN;
         RODELED2AAN;
-
-        return 0;
     }
 
-    int DoortvaartBijnaToegestaanLeds(void)
+    void DoortvaartBijnaToegestaanLeds(void)
     {
         AlleLedsUit();
 
@@ -80,21 +74,17 @@
         RODELED2AAN;
         GROENELED1AAN;
         GROENELED2AAN;
-
-        return 0;
     }
 
-    int DoorvaartToegestaanLeds(void)
+    void DoorvaartToegestaanLeds(void)
     {
         AlleLedsUit();
 
         GROENELED1AAN;
         GROENELED2AAN;
-
-        return 0;
     }
 
-    int DoorvaartGenaderdenLeds(void)
+    void DoorvaartGenaderdenLeds(void)
     {
         AlleLedsUit();
 
@@ -102,21 +92,18 @@
         RODELED2AAN;
 
         groeneLedsKnipperen = true;
-        return 0;
     }
 
-    int DoorvaartGeslotenBrugMetTegenliggers(void)
+    void DoorvaartGeslotenBrugMetTegenliggers(void)
     {
         AlleLedsUit();
 
         RODELED1AAN;
         RODELED2AAN;
         GELELED1AAN;
-
-        return 0;
     }
 
-    int DoorvaartGeslotenBrugZonderTegenliggers(void)
+    void DoorvaartGeslotenBrugZonderTegenliggers(void)
     {
         AlleLedsUit();
 
@@ -124,8 +111,6 @@
         RODELED2AAN;
         GELELED1AAN;
         GELELED2AAN;
-
-        return 0;
     }
 
 
