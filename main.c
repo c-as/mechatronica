@@ -1,5 +1,5 @@
 #include <avr/io.h>
-#include "pins.h"
+#include "pins.c"
 #include <util/delay.h>
 
 int main(void)
