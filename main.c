@@ -6,6 +6,7 @@
 #include "pins.h"
 #include "status.h"
 #include "servo.h"
+#include "h_bridge.h"
 
 void start_brug()
 {
@@ -24,6 +25,7 @@ int main(void)
     ZetPinDirectories();
     init_servo();
     init_uart();
+    init_h_bridge();
 
     stdout = &uart_output;
     stdin  = &uart_input;
