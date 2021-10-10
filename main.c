@@ -8,6 +8,9 @@
 #include "servo.h"
 #include "h_bridge.h"
 
+FILE uart_output = FDEV_SETUP_STREAM(uart_putchar, NULL, _FDEV_SETUP_WRITE);
+FILE uart_input = FDEV_SETUP_STREAM(NULL, uart_getchar, _FDEV_SETUP_READ);
+
 void start_brug()
 {
 
@@ -25,9 +28,6 @@ void start_brug()
         brug();
     }
 }
-
-FILE uart_output = FDEV_SETUP_STREAM(uart_putchar, NULL, _FDEV_SETUP_WRITE);
-FILE uart_input = FDEV_SETUP_STREAM(NULL, uart_getchar, _FDEV_SETUP_READ);
 
 int main(void)
 {
