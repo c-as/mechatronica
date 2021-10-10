@@ -3,6 +3,8 @@
 
 #include <util/setbaud.h>
 
+//maakt commicatie met je pc mogelijk via stdio+usb.
+
 void uart_putchar(char c, FILE *stream) {
     if (c == '\n') {
         uart_putchar('\r', stream);
