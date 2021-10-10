@@ -1,8 +1,10 @@
+#include <stdio.h>
 #include <avr/io.h>
 #include <stdbool.h>
+#include <util/delay.h>
+#include "uart.h"
 #include "pins.h"
 #include "status.h"
-#include <util/delay.h>
 
 void start_brug()
 {
@@ -13,9 +15,17 @@ void start_brug()
     }
 }
 
+FILE uart_output = FDEV_SETUP_STREAM(uart_putchar, NULL, _FDEV_SETUP_WRITE);
+FILE uart_input = FDEV_SETUP_STREAM(NULL, uart_getchar, _FDEV_SETUP_READ);
+
 int main(void)
 {
     ZetPinDirectories();
+
+    init_uart();
+
+    stdout = &uart_output;
+    stdin  = &uart_input;
 
     //brug is dicht doorvaart verboden
 //    DoorvaartGeslotenBrugMetTegenliggers();
