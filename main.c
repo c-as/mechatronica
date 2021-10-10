@@ -5,6 +5,7 @@
 #include "uart.h"
 #include "pins.h"
 #include "status.h"
+#include "servo.h"
 
 void start_brug()
 {
@@ -21,7 +22,7 @@ FILE uart_input = FDEV_SETUP_STREAM(NULL, uart_getchar, _FDEV_SETUP_READ);
 int main(void)
 {
     ZetPinDirectories();
-
+    init_servo();
     init_uart();
 
     stdout = &uart_output;
