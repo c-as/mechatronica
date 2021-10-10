@@ -2,6 +2,7 @@
 #include <avr/io.h>
 #include <stdbool.h>
 #include <util/delay.h>
+#include <stdlib.h>
 #include "uart.h"
 #include "pins.h"
 #include "status.h"
@@ -23,7 +24,7 @@ void start_brug()
 
     while (1)
     {
-
+        input();
         brug();
     }
 }
