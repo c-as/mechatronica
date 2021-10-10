@@ -10,6 +10,15 @@
 
 void start_brug()
 {
+
+    ZetPinDirectories();
+    init_servo();
+    init_uart();
+    init_h_bridge();
+
+    stdout = &uart_output;
+    stdin  = &uart_input;
+
     while (1)
     {
 
@@ -22,14 +31,6 @@ FILE uart_input = FDEV_SETUP_STREAM(NULL, uart_getchar, _FDEV_SETUP_READ);
 
 int main(void)
 {
-    ZetPinDirectories();
-    init_servo();
-    init_uart();
-    init_h_bridge();
-
-    stdout = &uart_output;
-    stdin  = &uart_input;
-
     //brug is dicht doorvaart verboden
 //    DoorvaartGeslotenBrugMetTegenliggers();
 
