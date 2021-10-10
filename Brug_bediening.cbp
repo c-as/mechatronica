@@ -58,7 +58,12 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="pins.h" />
+		<Unit filename="servo.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="servo.h" />
 		<Unit filename="status.h" />
+		<Unit filename="uart.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
