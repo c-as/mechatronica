@@ -28,6 +28,10 @@ void input(){
     }
 }
 
+bool is_wind_veilig(){
+    return current_rpm < 10000;
+}
+
 bool is_brug_dicht(){
     return false;
 }
