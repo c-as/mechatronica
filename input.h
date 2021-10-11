@@ -1,5 +1,7 @@
 #define INPUT_H
 
+//bestand waar de meeste sensoren worden geregeld.
+
 //windsnelheid = port D45
 //brug_dicht = port D44
 //brug_open = port D43

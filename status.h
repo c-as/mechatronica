@@ -2,6 +2,8 @@
 
 #include "input.h"
 
+//dit is het bestand voor alle beslis logica.
+
 enum STATUS
 {
     RESET,
