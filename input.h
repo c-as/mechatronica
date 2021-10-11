@@ -6,22 +6,26 @@
 //brug_dicht = port D44
 //brug_open = port D43
 
-int fan_counter = 0;
-int timer = 0;
-char snum[5];
+int current_rpm = 0;
 
 void init_input(){
     DDRL &= ~(1 << PL4);
 }
 
 void input(){
-    //check windsnelheid
+    static int last_time = 0;
+    static int fan_counter = 0;
+    //check fan input
     if(PINL & (1 << PL4)){
-        fan_counter += 1;
+        fan_counter++;
     }
 
-    itoa(fan_counter, snum, 10);
-    puts(snum);
+    //check fan rpm
+    if (abs(millis - last_time) >= 1000){
+        current_rpm = fan_counter;
+        fan_counter = 0;
+        last_time = millis;
+    }
 }
 
 bool is_brug_dicht(){
