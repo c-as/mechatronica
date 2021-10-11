@@ -3,9 +3,6 @@
 //als het goed is zijn dit milliseconden
 int millis = 0;
 
-//debug stuff
-char snum[5];
-
 void init_clock(){
     //mode 0
     TCCR2A = 0;
