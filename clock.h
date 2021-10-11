@@ -6,8 +6,8 @@ int millis = 0;
 void init_clock(){
     //mode 0
     TCCR2A = 0;
-    // set prescaler to 1024
-    TCCR2B |= (1 << CS01) | (1 << CS00);
+    // set prescaler to 64
+    TCCR2B |= (1 << CS22);
     //Set interrupt on compare match
     TIMSK2 |= (1 << TOIE2);
 
