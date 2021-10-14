@@ -165,6 +165,7 @@ void open_brug(){
 void sluit_brug(){
     if(status_dek == DEK_DICHT) return;
     if(is_er_een_boot()) return;
+    if(!is_wind_veilig()) return;
 
     DoorvaartVerbodenLeds();
 
@@ -175,6 +176,7 @@ void sluit_brug(){
 
 void open_brug_volledig(){
     //gebruik alleen als slagbomen dicht zijn
+    if(!is_wind_veilig()) return;
     status_bezig = BEZIG_OPEN;
     h_bridge_set_percentage(KRACHT_MOTOR);
 }
