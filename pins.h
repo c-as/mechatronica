@@ -97,6 +97,31 @@
         DDRC |= _BV(0) | _BV(1) | _BV(2) | _BV(3) | _BV(4) | _BV(5);
     }
 
+    void AlleLedsAan(void){
+        RODELED1AAN;
+        RODELED2AAN;
+        RODELED3AAN;
+        RODELED4AAN;
+        GROENELED1AAN;
+        GROENELED2AAN;
+        GROENELED3AAN;
+        GROENELED4AAN;
+        GELELED1AAN;
+        GELELED2AAN;
+        GELELED3AAN;
+        GELELED4AAN;
+        ZOEMERAAN;
+        SLAGBOOMLED1AAN;
+        SLAGBOOMLED2AAN;
+        CONTROLEPANEELAANLEDAAN;
+        CONTROLEPANEELAUTOMATISCHLEDAAN;
+        CONTROLEPANEELOPENLEDAAN;
+        CONTROLEPANEELVOETGANGERSLEDAAN;
+        CONTROLEPANEELBOTENLEDAAN;
+        CONTROLEPANEELWEERSOMSTANDIGHEDENLEDAAN;
+        CONTROLEPANEELBEZIGLEDAAN;
+    }
+
     void AlleLedsUit(void)
     {
         groeneLedsKnipperen = false;
