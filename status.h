@@ -19,11 +19,11 @@ void brug()
     case RESET:
         //brug is weet niet wat de omstandigheden zijn
 
-        if(is_brug_dicht()){
+        if(ISBRUGDICHT){
             status = DICHT;
         }
 
-        if(is_brug_open()){
+        if(ISBRUGOPEN){
             status = OPEN;
         }
 
@@ -40,5 +40,5 @@ void brug()
 void open_brug(){
     if(is_wind_veilig()){
 
-        }
+    }
 }

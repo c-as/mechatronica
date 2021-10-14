@@ -2,21 +2,32 @@
 
 //bestand waar de meeste sensoren worden geregeld.
 
-//windsnelheid = port D31
+//windsnelheid = port D31 PC6
 //brug_dicht = port
 //brug_open = port
+
+#define WINDMETERHOOG PINC & (1 << 6)
+#define ISBRUGDICHT PINC & (1 << 7)
+#define ISBRUGOPEN PINA & (1 << 7)
+#define VOETGANGERSSENSORHOOG1 PINA & (1 << 6)
+#define VOETGANGERSSENSORHOOG2 PINA & (1 << 5)
+#define NOODSTOPHOOG PINA & (1 << 4)
+#define SCHAKELAARAAN PINA & (1 << 3)
+#define SCHAKELAAROPEN PINA & (1 << 2)
+#define SCHAKELAARAUTOMATISCH PINA & (1 << 1)
 
 int current_rpm = 0;
 
 void init_input(){
-    DDRC &= ~(1 << PC6);
+    DDRC &= ~(_BV(6) | _BV(7));
+    DDRA &= ~(_BV(6) | _BV(5) | _BV(4) | _BV(3) | _BV(2) | _BV(1));
 }
 
 void input(){
     static int last_time = 0;
     static int fan_counter = 0;
     //check fan input
-    if(PINC & (1 << PC6)){
+    if(WINDMETERHOOG){
         fan_counter++;
     }
 
@@ -32,10 +43,4 @@ bool is_wind_veilig(){
     return current_rpm < 10000;
 }
 
-bool is_brug_dicht(){
-    return false;
-}
 
-bool is_brug_open(){
-    return !is_brug_dicht();
-}

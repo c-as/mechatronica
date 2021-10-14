@@ -57,6 +57,33 @@
 #define ZOEMERAAN PORTE |= (1 << 5)
 #define ZOEMERUIT PORTE &= ~(1 << 5)
 
+#define SLAGBOOMLED1AAN PORTG |= (1 << 0)
+#define SLAGBOOMLED1UIT PORTG &= ~(1 << 0)
+
+#define SLAGBOOMLED2AAN PORTG |= (1 << 1)
+#define SLAGBOOMLED2UIT PORTG &= ~(1 << 1)
+
+#define CONTROLEPANEELAANLEDAAN PORTG |= (1 << 2)
+#define CONTROLEPANEELAANLEDUIT PORTG &= ~(1 << 2)
+
+#define CONTROLEPANEELAUTOMATISCHLEDAAN PORTD |= (1 << 7)
+#define CONTROLEPANEELAUTOMATISCHLEDUIT PORTD &= ~(1 << 7)
+
+#define CONTROLEPANEELOPENLEDAAN PORTC |= (1 << 0)
+#define CONTROLEPANEELOPENLEDUIT PORTC &= ~(1 << 0)
+
+#define CONTROLEPANEELVOETGANGERSLEDAAN PORTC |= (1 << 1)
+#define CONTROLEPANEELVOETGANGERSLEDUIT PORTC &= ~(1 <<1)
+
+#define CONTROLEPANEELBOTENLEDAAN PORTC |= (1 << 2)
+#define CONTROLEPANEELBOTENLEDUIT PORTC &= ~(1 << 2)
+
+#define CONTROLEPANEELWEERSOMSTANDIGHEDENLEDAAN PORTC |= (1 << 3)
+#define CONTROLEPANEELWEERSOMSTANDIGHEDENLEDUIT PORTC &= ~(1 << 3)
+
+#define CONTROLEPANEELBEZIGLEDAAN PORTC |= (1 << 4)
+#define CONTROLEPANEELBEZIGLEDUIT PORTC &= ~(1 << 4)
+
     bool groeneLedsKnipperen = false;
 
 
@@ -65,6 +92,9 @@
         DDRB |= _BV(0) | _BV(1) | _BV(2) | _BV(3);
         DDRL |= _BV(0) | _BV(1) | _BV(3) | _BV(4) | _BV(5) | _BV(6) | _BV(7);
         DDRE |= _BV(5);
+        DDRG |= _BV(0) | _BV(1) | _BV(2);
+        DDRD |= _BV(7);
+        DDRC |= _BV(0) | _BV(1) | _BV(2) | _BV(3) | _BV(4) | _BV(5);
     }
 
     void AlleLedsUit(void)
