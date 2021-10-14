@@ -208,6 +208,8 @@ void sluit_slagbomen_volledig(){
     servo1_set_percentage(100);
     servo2_set_percentage(100);
 
+    ZOEMERUIT;
+
     status_slagbomen = SLAGBOMEN_DICHT;
 }
 
