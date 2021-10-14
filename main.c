@@ -24,6 +24,7 @@ void start_brug()
     init_uart();
     init_h_bridge();
 
+    //voor het gebruik van uart
     stdout = &uart_output;
     stdin  = &uart_input;
 
