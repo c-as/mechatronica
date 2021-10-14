@@ -97,15 +97,15 @@ void brug()
 
     switch(status_bezig){
         case BEZIG_SLUITEN:
+            //brug is dicht gegaan
             if(status_dek == DEK_DICHT){
-                //brug is dicht gegaan
                 h_bridge_set_percentage(0);
                 CONTROLEPANEELOPENLEDUIT;
                 open_slagbomen();
             }
         case BEZIG_OPEN:
+            //brug is open gegaan
             if (status_dek == DEK_OPEN){
-                //brug is open gegaan
                 h_bridge_set_percentage(0);
                 DoorvaartToegestaanLeds();
 
@@ -117,6 +117,7 @@ void brug()
             if (status_slagbomen == SLAGBOMEN_DICHT) open_brug_volledig();
     }
 
+    //knipperlichten
     if(status_slagbomen == SLAGBOMEN_DICHT){
         if(abs(millis - timer_lampen) > TIJD_KNIPPERLICHT && abs(millis - timer_lampen) < TIJD_KNIPPERLICHT * 2){
             SLAGBOOMLED1AAN;
@@ -130,6 +131,7 @@ void brug()
         }
     }
 
+    //wachten totdat brug vrij is
     if(status_slagbomen == SLAGBOMEN_SLUITEN){
         if(is_er_verkeer()){
             timer_slagboom = millis;
@@ -172,7 +174,7 @@ void sluit_brug(){
 }
 
 void open_brug_volledig(){
-    //alleen als slagbomen dicht zijn
+    //gebruik alleen als slagbomen dicht zijn
     status_bezig = BEZIG_OPEN;
     h_bridge_set_percentage(KRACHT_MOTOR);
 }
