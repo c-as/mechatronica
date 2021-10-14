@@ -45,4 +45,12 @@ bool is_wind_veilig(){
     return current_rpm < 10000;
 }
 
+bool is_er_een_boot(){
+    return (!BOOTSENSORHOOG1) || (!BOOTSENSORHOOG2);
+}
+
+bool is_er_verkeer(){
+    return (!VOETGANGERSSENSORHOOG1) || (!VOETGANGERSSENSORHOOG2);
+}
+
 
