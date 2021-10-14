@@ -8,7 +8,8 @@ enum STATUS
 {
     RESET,
     DICHT,
-    OPEN
+    OPEN,
+    GAAT_OPEN
 };
 
 int status = RESET;
@@ -30,8 +31,16 @@ void brug()
 
         break;
     case DICHT:
+
+
         break;
     case OPEN:
         break;
     }
+}
+
+void open_brug(){
+    if(is_wind_veilig()){
+
+        }
 }

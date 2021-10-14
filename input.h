@@ -2,21 +2,21 @@
 
 //bestand waar de meeste sensoren worden geregeld.
 
-//windsnelheid = port D45
-//brug_dicht = port D44
-//brug_open = port D43
+//windsnelheid = port D31
+//brug_dicht = port
+//brug_open = port
 
 int current_rpm = 0;
 
 void init_input(){
-    DDRL &= ~(1 << PL4);
+    DDRC &= ~(1 << PC6);
 }
 
 void input(){
     static int last_time = 0;
     static int fan_counter = 0;
     //check fan input
-    if(PINL & (1 << PL4)){
+    if(PINC & (1 << PC6)){
         fan_counter++;
     }
 
