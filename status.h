@@ -129,6 +129,10 @@ void brug()
     }
 
     if(status_slagbomen == SLAGBOMEN_SLUITEN){
+        if(is_er_verkeer()){
+            timer_slagboom = millis;
+        }
+
         if(abs(millis - timer_slagboom) > WACHTIJD_SLAGBOMEN){
             sluit_slagbomen_volledig();
         }
