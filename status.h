@@ -148,11 +148,12 @@ void open_brug(){
 
     if(!status_slagbomen == SLAGBOMEN_DICHT){
         sluit_slagbomen();
+        status_bezig = BEZIG_SLAGBOMEN_SLUITEN;
         //wacht met het aanzetten van de motor totdat de slagbomen dicht zijn
         return;
     }
 
-    h_bridge_set_percentage(KRACHT_MOTOR);
+    open_brug_volledig();
 }
 
 void sluit_brug(){
@@ -161,12 +162,14 @@ void sluit_brug(){
 
     DoorvaartVerbodenLeds();
 
+    status_bezig = BEZIG_SLUITEN;
+
     h_bridge_set_percentage(-KRACHT_MOTOR);
 }
 
 void open_brug_volledig(){
     //alleen als slagbomen dicht zijn
-
+    status_bezig = BEZIG_OPEN;
     h_bridge_set_percentage(KRACHT_MOTOR);
 }
 
