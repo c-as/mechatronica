@@ -93,7 +93,13 @@ void brug()
     else CONTROLEPANEELBEZIGLEDUIT;
 
     if(is_wind_veilig()) CONTROLEPANEELWEERSOMSTANDIGHEDENLEDUIT;
-    else CONTROLEPANEELWEERSOMSTANDIGHEDENLEDAAN;
+    else {
+        CONTROLEPANEELWEERSOMSTANDIGHEDENLEDAAN;
+
+        if(status_bezig != NIET_BEZIG){
+            noodstop = true;
+        }
+    }
 
     switch(status_bezig){
         case BEZIG_SLUITEN:
