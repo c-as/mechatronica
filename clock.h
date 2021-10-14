@@ -1,7 +1,7 @@
 #define CLOCK_H
 
 //als het goed is zijn dit milliseconden
-int millis = 0;
+unsigned long millis = 0;
 
 void init_clock(){
     //mode 0
