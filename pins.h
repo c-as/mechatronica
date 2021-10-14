@@ -161,7 +161,7 @@
         RODELED4AAN;
     }
 
-    void DoortvaartBijnaToegestaanLeds(void)
+    void DoorvaartBijnaToegestaanLeds(void)
     {
         AlleLedsUit();
 
