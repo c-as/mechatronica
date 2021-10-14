@@ -27,12 +27,6 @@ void start_brug()
     stdout = &uart_output;
     stdin  = &uart_input;
 
-    //h_bridge_set_percentage(75);
-    //h_bridge_set_percentage(-20);
-
-    DoorvaartVerbodenLeds();
-    _delay_ms(1000);
-    DoorvaartToegestaanLeds();
 
     while (1)
     {
