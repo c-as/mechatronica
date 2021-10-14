@@ -108,6 +108,7 @@ void brug()
                 h_bridge_set_percentage(0);
                 CONTROLEPANEELOPENLEDUIT;
                 open_slagbomen();
+                DoorvaartGeslotenBrugMetTegenliggers();
             }
         case BEZIG_OPEN:
             //brug is open gegaan
