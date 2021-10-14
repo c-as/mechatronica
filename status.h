@@ -1,7 +1,5 @@
 #define STATUS_H
 
-#include "input.h"
-
 //dit is het bestand voor alle beslis logica.
 
 enum STATUS
