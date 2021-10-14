@@ -34,12 +34,28 @@ void brug()
         CONTROLEPANEELAANLEDAAN;
 
         if(SCHAKELAARAUTOMATISCH){
+            CONTROLEPANEELAUTOMATISCHLEDAAN;
             //todo
+
+
         } else {
+            CONTROLEPANEELAUTOMATISCHLEDUIT;
             if(SCHAKELAAROPEN && status_bezig == NIET_BEZIG) open_brug();
             else if (status_bezig == NIET_BEZIG) sluit_brug();
         }
-    } else AlleLedsUit();
+    } else {
+        AlleLedsUit();
+        h_bridge_set_percentage(0);
+        status_dek = DEK_RESET;
+        status_bezig = NIET_BEZIG;
+        status_slagbomen = SLAGBOMEN_RESET;
+    }
+
+    if (status_bezig != NIET_BEZIG) CONTROLEPANEELBEZIGLEDAAN;
+    else CONTROLEPANEELBEZIGLEDUIT;
+
+    if(is_wind_veilig()) CONTROLEPANEELWEERSOMSTANDIGHEDENLEDUIT;
+    else CONTROLEPANEELWEERSOMSTANDIGHEDENLEDAAN;
 
     switch(status_bezig){
         case BEZIG_DICHT:
@@ -52,6 +68,7 @@ void brug()
             if (status_dek == DEK_OPEN){
                 //brug is open gegaan
                 h_bridge_set_percentage(0);
+                DoorvaartToegestaanLeds();
             }
     }
 
@@ -64,16 +81,20 @@ void brug()
         if(abs(millis - timer_lampen) > 2000){
             SLAGBOOMLED2AAN;
             SLAGBOOMLED1UIT;
-            timer_lampen = 0;
+            timer_lampen = millis;
         }
     }
 
 }
 
 void open_brug(){
+    CONTROLEPANEELOPENLEDAAN;
+
     if(status_dek == DEK_OPEN) return;
 
     if(!is_wind_veilig()) return;
+
+    DoorvaartBijnaToegestaanLeds();
 
     if(!status_slagbomen == SLAGBOMEN_DICHT){
         sluit_slagbomen();
@@ -83,7 +104,11 @@ void open_brug(){
 }
 
 void sluit_brug(){
+    CONTROLEPANEELOPENLEDUIT;
+
     if(status_dek == DEK_DICHT) return;
+
+    DoorvaartVerbodenLeds();
 
     h_bridge_set_percentage(-50);
 }
