@@ -87,7 +87,7 @@
     bool groeneLedsKnipperen = false;
 
 
-    void ZetPinDirectories(void)
+    void init_leds(void)
     {
         DDRB |= _BV(0) | _BV(1) | _BV(2) | _BV(3);
         DDRL |= _BV(0) | _BV(1) | _BV(3) | _BV(4) | _BV(5) | _BV(6) | _BV(7);

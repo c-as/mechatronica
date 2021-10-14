@@ -18,7 +18,7 @@ FILE uart_input = FDEV_SETUP_STREAM(NULL, uart_getchar, _FDEV_SETUP_READ);
 
 void start_brug()
 {
-    ZetPinDirectories();
+    init_leds();
     init_clock();
     init_servo();
     init_uart();
