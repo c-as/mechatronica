@@ -55,12 +55,12 @@ void brug()
             CONTROLEPANEELAUTOMATISCHLEDAAN;
 
             if(auto_reset){
-                //startup
+                //opstarten
                 if (status_dek == DEK_DICHT) sluit_brug();
                 else open_brug();
                 auto_reset = false;
             } else {
-                //autmatic operation
+                //autmatische logica
                 switch(status_dek){
                     case DEK_DICHT:
                         if (is_er_een_boot()) open_brug();
