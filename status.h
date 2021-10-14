@@ -14,6 +14,7 @@ enum ENUM {
     BEZIG_DICHT,
 };
 
+bool noodstop = false;
 int status_dek = DEK_RESET;
 int status_slagbomen = SLAGBOMEN_RESET;
 int status_bezig = NIET_BEZIG;
@@ -21,8 +22,11 @@ int timer_lampen = 0;
 
 void brug()
 {
+    if(noodstop) return;
+
     if (NOODSTOPHOOG){
         h_bridge_set_percentage(0);
+        noodstop = true;
         return;
     }
 
