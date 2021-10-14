@@ -113,6 +113,8 @@ void brug()
                     timer_boot = millis;
                 }
             }
+        case BEZIG_SLAGBOMEN_SLUITEN:
+            if (status_slagbomen == SLAGBOMEN_DICHT) open_brug_volledig();
     }
 
     if(status_slagbomen == SLAGBOMEN_DICHT){
@@ -137,8 +139,6 @@ void brug()
             sluit_slagbomen_volledig();
         }
     }
-
-    if (status_bezig == BEZIG_SLAGBOMEN_SLUITEN && status_slagbomen == SLAGBOMEN_DICHT) open_brug_volledig();
 }
 
 void open_brug(){
