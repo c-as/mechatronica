@@ -162,13 +162,12 @@ void brug()
 }
 
 void open_brug(){
-    CONTROLEPANEELOPENLEDAAN;
-
     if(status_dek == DEK_OPEN) return;
-
     if(!is_wind_veilig()) return;
 
     DoorvaartBijnaToegestaanLeds();
+
+    CONTROLEPANEELOPENLEDAAN;
 
     if(!status_slagbomen == SLAGBOMEN_DICHT){
         sluit_slagbomen();
