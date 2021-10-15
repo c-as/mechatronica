@@ -30,12 +30,13 @@ void init_input(){
 void input(){
     static int last_time = 0;
     static int fan_counter = 0;
+
     //check fan input
     if(WINDMETERHOOG){
         fan_counter++;
     }
 
-    //check fan rpm
+    //check de fan rpm elke seconde
     if (abs(millis - last_time) >= 1000){
         current_rpm = fan_counter;
         fan_counter = 0;
