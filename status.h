@@ -81,8 +81,10 @@ void brug()
         } else {
             //handmatige stand
             CONTROLEPANEELAUTOMATISCHLEDUIT;
-            if(SCHAKELAAROPEN && status_bezig == NIET_BEZIG) open_brug();
-            else if (status_bezig == NIET_BEZIG) sluit_brug();
+            if(status_bezig == NIET_BEZIG){
+                if(SCHAKELAAROPEN) open_brug();
+                else sluit_brug();
+            }
         }
     } else {
         //brug staat uit
