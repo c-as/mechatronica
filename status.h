@@ -11,7 +11,7 @@ enum {
     SLAGBOMEN_OPEN,
     SLAGBOMEN_RESET,
     NIET_BEZIG,
-    BEZIG_OPEN,
+    BEZIG_OPENEN,
     BEZIG_SLUITEN,
     BEZIG_SLAGBOMEN_SLUITEN,
     BEZIG_NOOD,
@@ -104,7 +104,7 @@ void brug()
         CONTROLEPANEELWEERSOMSTANDIGHEDENLEDAAN;
 
         if(SCHAKELAARAUTOMATISCH){
-            if(status_bezig == BEZIG_OPEN)sluit_brug();
+            if(status_bezig == BEZIG_OPENEN)sluit_brug();
             if(status_dek == DEK_OPEN ){
                 status_bezig == BEZIG_NOOD;
                 DoorvaartVerbodenLeds();
@@ -121,7 +121,7 @@ void brug()
                 open_slagbomen();
                 DoorvaartGeslotenBrugMetTegenliggers();
             }
-        case BEZIG_OPEN:
+        case BEZIG_OPENEN:
             //brug is open gegaan
             if (status_dek == DEK_OPEN){
                 h_bridge_set_percentage(0);
@@ -193,7 +193,7 @@ void sluit_brug(){
 void open_brug_volledig(){
     //gebruik alleen als slagbomen dicht zijn
     if(!is_wind_veilig()) return;
-    status_bezig = BEZIG_OPEN;
+    status_bezig = BEZIG_OPENEN;
     h_bridge_set_percentage(KRACHT_MOTOR_OPENEN);
 }
 
