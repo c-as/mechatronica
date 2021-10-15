@@ -120,12 +120,14 @@ void brug()
                 CONTROLEPANEELOPENLEDUIT;
                 open_slagbomen();
                 DoorvaartGeslotenBrugMetTegenliggers();
+                status_bezig = NIET_BEZIG;
             }
         case BEZIG_OPENEN:
             //brug is open gegaan
             if (status_dek == DEK_OPEN){
                 h_bridge_set_percentage(0);
                 DoorvaartToegestaanLeds();
+                status_bezig = NIET_BEZIG;
 
                 if(SCHAKELAARAUTOMATISCH){
                     timer_boot = millis;
