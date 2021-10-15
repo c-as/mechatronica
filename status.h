@@ -19,7 +19,8 @@ enum {
 const int TIJD_KNIPPERLICHT = 1000;
 const int WACHTIJD_BOOT = 10000;
 const int WACHTIJD_SLAGBOMEN = 10000;
-const int KRACHT_MOTOR = 50;
+const int KRACHT_MOTOR_OPENEN = 50;
+const int KRACHT_MOTOR_SLUITEN = 10;
 
 bool auto_reset = true;
 bool noodstop = false;
@@ -181,14 +182,14 @@ void sluit_brug(){
 
     status_bezig = BEZIG_SLUITEN;
 
-    h_bridge_set_percentage(-KRACHT_MOTOR);
+    h_bridge_set_percentage(-KRACHT_MOTOR_SLUITEN);
 }
 
 void open_brug_volledig(){
     //gebruik alleen als slagbomen dicht zijn
     if(!is_wind_veilig()) return;
     status_bezig = BEZIG_OPEN;
-    h_bridge_set_percentage(KRACHT_MOTOR);
+    h_bridge_set_percentage(KRACHT_MOTOR_OPENEN);
 }
 
 void sluit_slagbomen(){
