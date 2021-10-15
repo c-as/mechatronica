@@ -13,7 +13,8 @@ enum {
     NIET_BEZIG,
     BEZIG_OPEN,
     BEZIG_SLUITEN,
-    BEZIG_SLAGBOMEN_SLUITEN
+    BEZIG_SLAGBOMEN_SLUITEN,
+    BEZIG_NOOD,
 };
 
 const int TIJD_KNIPPERLICHT = 1000;
@@ -69,7 +70,7 @@ void brug()
                     case DEK_DICHT:
                         if (is_er_een_boot()) open_brug();
                     case DEK_OPEN:
-                        if (is_er_een_boot()) timer_boot = millis;
+                        if (is_er_een_boot() && !status_bezig == BEZIG_NOOD) timer_boot = millis;
                         if (abs(millis - timer_boot) > WACHTIJD_BOOT){
                             sluit_brug();
                         }
@@ -100,8 +101,12 @@ void brug()
     else {
         CONTROLEPANEELWEERSOMSTANDIGHEDENLEDAAN;
 
-        if(status_bezig != NIET_BEZIG){
-            noodstop = true;
+        if(SCHAKELAARAUTOMATISCH){
+            if(status_bezig == BEZIG_OPEN)sluit_brug();
+            if(status_dek == DEK_OPEN ){
+                status_bezig == BEZIG_NOOD;
+                DoorvaartVerbodenLeds();
+            }
         }
     }
 
@@ -176,7 +181,6 @@ void open_brug(){
 void sluit_brug(){
     if(status_dek == DEK_DICHT) return;
     if(is_er_een_boot()) return;
-    if(!is_wind_veilig()) return;
 
     DoorvaartVerbodenLeds();
 
