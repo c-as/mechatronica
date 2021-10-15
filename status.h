@@ -2,7 +2,7 @@
 
 //dit is het bestand voor alle beslis logica.
 
-enum ENUM {
+enum {
     DEK_OPEN,
     DEK_DICHT,
     DEK_RESET,
