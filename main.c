@@ -19,6 +19,7 @@ FILE uart_input = FDEV_SETUP_STREAM(NULL, uart_getchar, _FDEV_SETUP_READ);
 void start_brug()
 {
     init_leds();
+    init_input();
     init_clock();
     init_servo();
     init_uart();
