@@ -134,7 +134,7 @@ void brug()
     }
 
     //knipperlichten
-    if(status_slagbomen == SLAGBOMEN_DICHT){
+    if(status_slagbomen == SLAGBOMEN_DICHT || SLAGBOMEN_SLUITEN){
         if(abs(millis - timer_lampen) > TIJD_KNIPPERLICHT && abs(millis - timer_lampen) < TIJD_KNIPPERLICHT * 2){
             SLAGBOOMLED1AAN;
             SLAGBOOMLED2UIT;
