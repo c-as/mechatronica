@@ -34,7 +34,10 @@ int timer_slagboom = 0;
 
 void brug()
 {
-    if(noodstop) return;
+    if(noodstop){
+        CONTROLEPANEELNOODSTOPLEDAAN;
+        return;
+    }
 
     if (NOODSTOPHOOG){
         h_bridge_set_percentage(0);

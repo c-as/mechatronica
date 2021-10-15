@@ -84,6 +84,9 @@
 #define CONTROLEPANEELBEZIGLEDAAN PORTC |= (1 << 4)
 #define CONTROLEPANEELBEZIGLEDUIT PORTC &= ~(1 << 4)
 
+#define CONTROLEPANEELNOODSTOPLEDAAN PORTC |= (1 << 5)
+#define CONTROLEPANEELNOODSTOPLEDUIT PORTC &= ~(1 << 5)
+
     bool groeneLedsKnipperen = false;
 
 
