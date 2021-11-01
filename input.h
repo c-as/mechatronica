@@ -7,18 +7,18 @@
 //brug_open = port
 
 #define WINDMETERHOOG PINC & (1 << 6)
-#define ISBRUGDICHT PINC & (1 << 7)
-#define ISBRUGOPEN PINA & (1 << 7)
+#define ISBRUGDICHT PING & (1 << 5)
+#define ISBRUGOPEN PINL & (1 << 0)
 #define VOETGANGERSSENSORHOOG1 PINA & (1 << 6)
 #define VOETGANGERSSENSORHOOG2 PINA & (1 << 5)
 #define VOETGANGERSSENSORHOOG3 PIND & (1 << 1)
 #define VOETGANGERSSENSORHOOG4 PIND & (1 << 2)
-#define BOOTSENSORHOOG1 PINA & (1 << 0)
+#define BOOTSENSORHOOG1 PINA & (1 << 1)
 #define BOOTSENSORHOOG2 PIND & (1 << 0)
 #define NOODSTOPHOOG PINA & (1 << 4)
-#define SCHAKELAARAAN PINA & (1 << 3)
-#define SCHAKELAAROPEN PINA & (1 << 2)
-#define SCHAKELAARAUTOMATISCH PINA & (1 << 1)
+#define SCHAKELAARAAN PINA & (1 << 2)
+#define SCHAKELAAROPEN PINA & (1 << 0)
+#define SCHAKELAARAUTOMATISCH PINA & (1 << 4)
 
 int current_rpm = 0;
 int voetgangers_counter = 0;
@@ -27,7 +27,9 @@ bool prev_voetgangers_sensor2 = false;
 
 void init_input(){
     DDRC &= ~(_BV(6) | _BV(7));
-    DDRA &= ~(_BV(6) | _BV(5) | _BV(4) | _BV(3) | _BV(2) | _BV(1));
+    DDRA &= ~(_BV(6) | _BV(5) | _BV(4) | _BV(3) | _BV(2) | _BV(1) | _BV(0));
+    DDRL &= ~(_BV(0));
+    DDRC &= ~(_BV(7));
 }
 
 void input(){
