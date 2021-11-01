@@ -21,6 +21,9 @@
 #define SCHAKELAARAUTOMATISCH PINA & (1 << 1)
 
 int current_rpm = 0;
+int voetgangers_counter = 0;
+bool prev_voetgangers_sensor1 = false;
+bool prev_voetgangers_sensor2 = false;
 
 void init_input(){
     DDRC &= ~(_BV(6) | _BV(7));
@@ -42,6 +45,25 @@ void input(){
         fan_counter = 0;
         last_time = millis;
     }
+
+    //check voor voetgangers
+    if(VOETGANGERSSENSORHOOG1 && !prev_voetgangers_sensor1){
+        voetgangers_counter++;
+        prev_voetgangers_sensor1 = true;
+    }
+
+    if(!VOETGANGERSSENSORHOOG1 && prev_voetgangers_sensor1){
+        prev_voetgangers_sensor1 = false;
+    }
+
+    if(VOETGANGERSSENSORHOOG2 && !prev_voetgangers_sensor2){
+        voetgangers_counter--;
+        prev_voetgangers_sensor2 = true;
+    }
+
+    if(!VOETGANGERSSENSORHOOG2 && prev_voetgangers_sensor2){
+        prev_voetgangers_sensor2 = false;
+    }
 }
 
 bool is_wind_veilig(){
@@ -53,7 +75,8 @@ bool is_er_een_boot(){
 }
 
 bool is_er_verkeer(){
-    return (!VOETGANGERSSENSORHOOG1) || (!VOETGANGERSSENSORHOOG2) || (!VOETGANGERSSENSORHOOG3) || (!VOETGANGERSSENSORHOOG4);
+    return voetgangers_counter > 0;
+    //return (!VOETGANGERSSENSORHOOG1) || (!VOETGANGERSSENSORHOOG2) || (!VOETGANGERSSENSORHOOG3) || (!VOETGANGERSSENSORHOOG4);
 }
 
 
