@@ -19,7 +19,7 @@ enum {
 
 const int TIJD_KNIPPERLICHT = 1000;
 const int WACHTIJD_BOOT = 10000;
-const int WACHTIJD_SLAGBOMEN = 10000;
+const int WACHTIJD_SLAGBOMEN = 1000;
 const int KRACHT_MOTOR_OPENEN = 50;
 const int KRACHT_MOTOR_SLUITEN = 10;
 
