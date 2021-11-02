@@ -36,12 +36,8 @@ int timer_slagboom = 0;
 
 void brug()
 {
-    if(noodstop){
-        CONTROLEPANEELNOODSTOPLEDAAN;
-        return;
-    }
-
-    if (NOODSTOPHOOG){
+    //geen dedicated noodstop knops
+    if (false){
         h_bridge_set_percentage(0);
         noodstop = true;
         return;
@@ -81,6 +77,7 @@ void brug()
         } else {
             //handmatige stand
             CONTROLEPANEELAUTOMATISCHLEDUIT;
+
             if(status_bezig == NIET_BEZIG){
                 if(SCHAKELAAROPEN) open_brug();
                 else sluit_brug();
@@ -94,6 +91,9 @@ void brug()
         status_dek = DEK_RESET;
         status_bezig = NIET_BEZIG;
         status_slagbomen = SLAGBOMEN_RESET;
+        CONTROLEPANEELAANLEDAAN;
+        CONTROLEPANEELNOODSTOPLEDAAN;
+        return;
     }
 
     if (status_bezig != NIET_BEZIG) CONTROLEPANEELBEZIGLEDAAN;
