@@ -49,7 +49,8 @@ void brug()
 
     if (SCHAKELAARAAN){
         //brug staat aan
-        CONTROLEPANEELAANLEDAAN;
+        CONTROLEPANEELAANLEDUIT;
+        CONTROLEPANEELNOODSTOPLEDUIT;
 
         if(SCHAKELAARAUTOMATISCH){
             //automatische stand
@@ -99,6 +100,12 @@ void brug()
     if (status_bezig != NIET_BEZIG) CONTROLEPANEELBEZIGLEDAAN;
     else CONTROLEPANEELBEZIGLEDUIT;
 
+    if(status_dek == DEK_DICHT){
+        CONTROLEPANEELOPENLEDUIT;
+    } else {
+        CONTROLEPANEELOPENLEDAAN;
+    }
+
     if(is_wind_veilig()) CONTROLEPANEELWEERSOMSTANDIGHEDENLEDUIT;
     else {
         CONTROLEPANEELWEERSOMSTANDIGHEDENLEDAAN;
@@ -117,7 +124,6 @@ void brug()
             //brug is dicht gegaan
             if(status_dek == DEK_DICHT){
                 h_bridge_set_percentage(0);
-                CONTROLEPANEELOPENLEDUIT;
                 open_slagbomen();
                 DoorvaartGeslotenBrugMetTegenliggers();
                 status_bezig = NIET_BEZIG;
@@ -168,8 +174,6 @@ void open_brug(){
     if(!is_wind_veilig()) return;
 
     DoorvaartBijnaToegestaanLeds();
-
-    CONTROLEPANEELOPENLEDAAN;
 
     if(!status_slagbomen == SLAGBOMEN_DICHT){
         sluit_slagbomen();
