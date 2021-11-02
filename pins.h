@@ -42,8 +42,8 @@
 #define GROENELED4AAN PORTL |= (1 << 5)
 #define GROENELED4UIT PORTL &= ~(1 << 5)
 
-#define GELELED1AAN PORTL |= (1 << 0)
-#define GELELED1UIT PORTL &= ~(1 << 0)
+#define GELELED1AAN PORTH |= (1 << 4)
+#define GELELED1UIT PORTH &= ~(1 << 4)
 
 #define GELELED2AAN PORTL |= (1 << 1)
 #define GELELED2UIT PORTL &= ~(1 << 1)
@@ -51,8 +51,8 @@
 #define GELELED3AAN PORTL |= (1 << 6)
 #define GELELED3UIT PORTL &= ~(1 << 6)
 
-#define GELELED4AAN PORTL |= (1 << 7)
-#define GELELED4UIT PORTL &= ~(1 << 7)
+#define GELELED4AAN PORTA |= (1 << 7)
+#define GELELED4UIT PORTA &= ~(1 << 7)
 
 #define ZOEMERAAN PORTE |= (1 << 5)
 #define ZOEMERUIT PORTE &= ~(1 << 5)
@@ -60,32 +60,32 @@
 #define SLAGBOOMLED1AAN PORTG |= (1 << 0)
 #define SLAGBOOMLED1UIT PORTG &= ~(1 << 0)
 
-#define SLAGBOOMLED2AAN PORTG |= (1 << 1)
-#define SLAGBOOMLED2UIT PORTG &= ~(1 << 1)
+#define SLAGBOOMLED2AAN PORTC |= (1 << 4)
+#define SLAGBOOMLED2UIT PORTC &= ~(1 << 4)
 
 #define CONTROLEPANEELAANLEDAAN PORTA |= (1 << 6)
 #define CONTROLEPANEELAANLEDUIT PORTA &= ~(1 << 6)
 
-#define CONTROLEPANEELAUTOMATISCHLEDAAN PORTC |= (1 << 5)
-#define CONTROLEPANEELAUTOMATISCHLEDUIT PORTC &= ~(1 << 5)
+#define CONTROLEPANEELAUTOMATISCHLEDAAN PORTC |= (1 << 7)
+#define CONTROLEPANEELAUTOMATISCHLEDUIT PORTC &= ~(1 << 7)
 
-#define CONTROLEPANEELOPENLEDAAN PORTC |= (1 << 7)
-#define CONTROLEPANEELOPENLEDUIT PORTC &= ~(1 << 7)
+#define CONTROLEPANEELOPENLEDAAN PORTC |= (1 << 5)
+#define CONTROLEPANEELOPENLEDUIT PORTC &= ~(1 << 5)
 
-#define CONTROLEPANEELVOETGANGERSLEDAAN PORTL |= (1 << 7)
-#define CONTROLEPANEELVOETGANGERSLEDUIT PORTL &= ~(1 <<7)
+#define CONTROLEPANEELVOETGANGERSLEDAAN PORTC |= (1 << 3)
+#define CONTROLEPANEELVOETGANGERSLEDUIT PORTC &= ~(1 <<3)
 
-#define CONTROLEPANEELBOTENLEDAAN PORTG |= (1 << 1)
-#define CONTROLEPANEELBOTENLEDUIT PORTG &= ~(1 << 1)
+#define CONTROLEPANEELBOTENLEDAAN PORTC |= (1 << 1)
+#define CONTROLEPANEELBOTENLEDUIT PORTC &= ~(1 << 1)
 
 #define CONTROLEPANEELWEERSOMSTANDIGHEDENLEDAAN PORTD |= (1 << 7)
 #define CONTROLEPANEELWEERSOMSTANDIGHEDENLEDUIT PORTD &= ~(1 << 7)
 
-#define CONTROLEPANEELBEZIGLEDAAN PORTC |= (1 << 1)
-#define CONTROLEPANEELBEZIGLEDUIT PORTC &= ~(1 << 1)
+#define CONTROLEPANEELBEZIGLEDAAN PORTG |= (1 << 1)
+#define CONTROLEPANEELBEZIGLEDUIT PORTG &= ~(1 << 1)
 
-#define CONTROLEPANEELNOODSTOPLEDAAN PORTC |= (1 << 3)
-#define CONTROLEPANEELNOODSTOPLEDUIT PORTC &= ~(1 << 3)
+#define CONTROLEPANEELNOODSTOPLEDAAN PORTL |= (1 << 7)
+#define CONTROLEPANEELNOODSTOPLEDUIT PORTL &= ~(1 << 7)
 
     bool groeneLedsKnipperen = false;
 
@@ -93,11 +93,13 @@
     void init_leds(void)
     {
         DDRB |= _BV(0) | _BV(1) | _BV(2) | _BV(3);
-        DDRL |= _BV(1) | _BV(3) | _BV(4) | _BV(5) | _BV(6) | _BV(7);
+        DDRL |= _BV(1) | _BV(2) | _BV(3) | _BV(4) | _BV(5) | _BV(6) | _BV(7);
         DDRE |= _BV(5);
-        DDRG |= _BV(0) | _BV(1) | _BV(2);
+        DDRG |= _BV(0) | _BV(1);
+        DDRA |= _BV(6) | _BV(7);
         DDRD |= _BV(7);
-        DDRC |= _BV(0) | _BV(1) | _BV(2) | _BV(3) | _BV(4) | _BV(5);
+        DDRC |= _BV(1) | _BV(3) | _BV(4) | _BV(5) | _BV(7);
+        DDRH |= _BV(4);
     }
 
     void AlleLedsAan(void){
