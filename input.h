@@ -105,17 +105,15 @@ void input(){
 }
 
 bool is_wind_veilig(){
-    return current_rpm < 10000;
+    return current_rpm < 1;
 }
 
 bool is_er_een_boot(){
-    return boten_counter > 0;
-    //return (!BOOTSENSORHOOG1) || (!BOOTSENSORHOOG2);
+    return boten_counter != 0;
 }
 
 bool is_er_verkeer(){
-    return voetgangers_counter > 0;
-    //return (!VOETGANGERSSENSORHOOG1) || (!VOETGANGERSSENSORHOOG2) || (!VOETGANGERSSENSORHOOG3) || (!VOETGANGERSSENSORHOOG4);
+    return voetgangers_counter != 0;
 }
 
 
