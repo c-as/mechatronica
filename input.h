@@ -7,7 +7,7 @@
 //brug_open = port
 
 #define WINDMETERHOOG PINA & (1 << 1)
-#define BRUGDICHTLIMITHOOG PINC & (1 << 4)
+#define BRUGDICHTLIMITINGEDRUKT PINC & (1 << 4)
 #define VOETGANGERSSENSORINHOOG PINA & (1 << 7)
 #define VOETGANGERSSENSORUITHOOG PINC & (1 << 6)
 #define BOOTSENSORINHOOG PINA & (1 << 3)
@@ -75,35 +75,30 @@ void input(){
         voetgangers_counter++;
         prev_boten_sensor_in = true;
     }
-
     if(!VOETGANGERSSENSORINHOOG && prev_voetgangers_sensor_in){
         prev_boten_sensor_in = false;
     }
-
     if(VOETGANGERSSENSORUITHOOG && !prev_voetgangers_sensor_uit){
         voetgangers_counter--;
         prev_boten_sensor_uit = true;
     }
-
     if(!VOETGANGERSSENSORUITHOOG && prev_voetgangers_sensor_uit){
         prev_boten_sensor_uit = false;
     }
+
 
     //check voor boten
     if(BOOTSENSORINHOOG && !prev_boten_sensor_in){
         boten_counter++;
         prev_boten_sensor_in = true;
     }
-
     if(!BOOTSENSORINHOOG && prev_boten_sensor_in){
         prev_boten_sensor_in = false;
     }
-
     if(BOOTSENSORUITHOOG && !prev_boten_sensor_uit){
         boten_counter--;
         prev_boten_sensor_uit = true;
     }
-
     if(!BOOTSENSORUITHOOG && prev_boten_sensor_uit){
         prev_boten_sensor_uit = false;
     }
