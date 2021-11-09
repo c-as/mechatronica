@@ -104,9 +104,9 @@ void leds(){
     }
 
     if(is_wind_veilig()){
-        CONTROLEPANEELWEERSOMSTANDIGHEDENLEDAAN;
-    } else {
         CONTROLEPANEELWEERSOMSTANDIGHEDENLEDUIT;
+    } else {
+        CONTROLEPANEELWEERSOMSTANDIGHEDENLEDAAN;
     }
 
     if(schakelaar_modus){
