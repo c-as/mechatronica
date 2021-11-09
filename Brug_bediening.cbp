@@ -59,6 +59,7 @@
 		</Unit>
 		<Unit filename="h_bridge.h" />
 		<Unit filename="input.h" />
+		<Unit filename="lineair.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
