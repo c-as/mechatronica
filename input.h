@@ -6,28 +6,38 @@
 //brug_dicht = port
 //brug_open = port
 
-#define WINDMETERHOOG PINC & (1 << 6)
-#define ISBRUGDICHT PING & (1 << 5)
-#define ISBRUGOPEN PINL & (1 << 0)
-#define VOETGANGERSSENSORHOOG1 PING & (1 << 2)
-#define VOETGANGERSSENSORHOOG2 PINA & (1 << 5)
-#define BOOTSENSORHOOG1 PINA & (1 << 3)
-#define BOOTSENSORHOOG2 PIND & (1 << 0)
-#define SCHAKELAARAAN !(PINA & (1 << 0))
-#define SCHAKELAAROPEN PINA & (1 << 4)
-#define SCHAKELAARAUTOMATISCH PINA & (1 << 2)
+#define WINDMETERHOOG PINA & (1 << 1)
+#define BRUGDICHTLIMITHOOG PINC & (1 << 4)
+#define VOETGANGERSSENSORINHOOG PINA & (1 << 7)
+#define VOETGANGERSSENSORUITHOOG PINC & (1 << 6)
+#define BOOTSENSORINHOOG PINA & (1 << 3)
+#define BOOTSENSORUITHOOG PINA & (1 << 7)
+#define KNOPMODUSINGEDRUKT !(PINA & (1 << 0))
+#define KNOPOPENINGEDRUKT !(PINA & (1 << 2))
+#define KNOPSLAGBOMENINGEDRUKT !(PINA & (1 << 4))
+#define KNOPNOODSTOPINGEDRUKT !(PINL & (1 << 5))
+
 
 int current_rpm = 0;
 int voetgangers_counter = 0;
-bool prev_voetgangers_sensor1 = false;
-bool prev_voetgangers_sensor2 = false;
+bool prev_voetgangers_sensor_in = false;
+bool prev_voetgangers_sensor_uit = false;
+
+int boten_counter = 0;
+bool prev_boten_sensor_in = false;
+bool prev_boten_sensor_uit = false;
+
+bool schakelaar_modus = false;
+bool schakelaar_open = false;
+bool schakelaar_slagbomen = false;
+bool noodstop = false;
 
 void init_input(){
-    DDRC &= ~(_BV(6));
-    DDRG &= ~(_BV(5) | _BV(2));
-    DDRA &= ~(_BV(0) | _BV(2) | _BV(3) | _BV(4) | _BV(5));
-    DDRL &= ~(_BV(0));
-    DDRD &= ~(_BV(0));
+    //DDRC &= ~(_BV(6));
+    //DDRG &= ~(_BV(5) | _BV(2));
+    //DDRA &= ~(_BV(0) | _BV(2) | _BV(3) | _BV(4) | _BV(5));
+    //DDRL &= ~(_BV(0));
+    //DDRD &= ~(_BV(0));
 }
 
 void input(){
@@ -46,23 +56,59 @@ void input(){
         last_time = millis;
     }
 
+    //check knoppen voor input
+    if(KNOPMODUSINGEDRUKT){
+        schakelaar_modus != schakelaar_modus;
+    }
+
+    if(KNOPOPENINGEDRUKT){
+        schakelaar_open != schakelaar_open;
+    }
+
+    if(KNOPSLAGBOMENINGEDRUKT){
+        schakelaar_slagbomen != schakelaar_slagbomen;
+    }
+
+    if(KNOPNOODSTOPINGEDRUKT){
+        noodstop != noodstop;
+    }
+
     //check voor voetgangers
-    if(VOETGANGERSSENSORHOOG1 && !prev_voetgangers_sensor1){
+    if(VOETGANGERSSENSORINHOOG && !prev_voetgangers_sensor_in){
         voetgangers_counter++;
-        prev_voetgangers_sensor1 = true;
+        prev_boten_sensor_in = true;
     }
 
-    if(!VOETGANGERSSENSORHOOG1 && prev_voetgangers_sensor1){
-        prev_voetgangers_sensor1 = false;
+    if(!VOETGANGERSSENSORINHOOG && prev_voetgangers_sensor_in){
+        prev_boten_sensor_in = false;
     }
 
-    if(VOETGANGERSSENSORHOOG2 && !prev_voetgangers_sensor2){
+    if(VOETGANGERSSENSORUITHOOG && !prev_voetgangers_sensor_uit){
         voetgangers_counter--;
-        prev_voetgangers_sensor2 = true;
+        prev_boten_sensor_uit = true;
     }
 
-    if(!VOETGANGERSSENSORHOOG2 && prev_voetgangers_sensor2){
-        prev_voetgangers_sensor2 = false;
+    if(!VOETGANGERSSENSORUITHOOG && prev_voetgangers_sensor_uit){
+        prev_boten_sensor_uit = false;
+    }
+
+    //check voor boten
+    if(BOOTSENSORINHOOG && !prev_boten_sensor_in){
+        boten_counter++;
+        prev_boten_sensor_in = true;
+    }
+
+    if(!BOOTSENSORINHOOG && prev_boten_sensor_in){
+        prev_boten_sensor_in = false;
+    }
+
+    if(BOOTSENSORUITHOOG && !prev_boten_sensor_uit){
+        boten_counter--;
+        prev_boten_sensor_uit = true;
+    }
+
+    if(!BOOTSENSORUITHOOG && prev_boten_sensor_uit){
+        prev_boten_sensor_uit = false;
     }
 }
 
@@ -71,7 +117,8 @@ bool is_wind_veilig(){
 }
 
 bool is_er_een_boot(){
-    return (!BOOTSENSORHOOG1) || (!BOOTSENSORHOOG2);
+    return boten_counter > 0;
+    //return (!BOOTSENSORHOOG1) || (!BOOTSENSORHOOG2);
 }
 
 bool is_er_verkeer(){
