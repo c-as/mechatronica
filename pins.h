@@ -35,41 +35,34 @@
 #define CONTROLEPANEELWEERSOMSTANDIGHEDENLEDAAN PORTL |= (1 << 7)
 #define CONTROLEPANEELWEERSOMSTANDIGHEDENLEDUIT PORTL &= ~(1 << 7)
 
-    void init_leds(void)
-    {
-        DDRC |= _BV(0) | _BV(3) | _BV(5) | _BV(7);
-        DDRD |= _BV(7);
-        DDRE |= _BV(3);
-        DDRF |= _BV(5);
-        DDRG |= _BV(0) | _BV(2);
-        DDRH |= _BV(3) | _BV(6);
-        DDRL |= _BV(4) | _BV(6) | _BV(7);
-    }
-
-    //void AlleLedsAan(void){
-    //}
-
-    //void AlleLedsUit(void)
-    //{
-    //}
+void init_leds(void)
+{
+    DDRC |= _BV(0) | _BV(3) | _BV(5) | _BV(7);
+    DDRD |= _BV(7);
+    DDRE |= _BV(3);
+    DDRF |= _BV(5);
+    DDRG |= _BV(0) | _BV(2);
+    DDRH |= _BV(3) | _BV(6);
+    DDRL |= _BV(4) | _BV(6) | _BV(7);
+}
 
 
-    void DoorvaartVerbodenLeds(void)
-    {
-        GROENELEDSUIT;
-        RODELEDSAAN;
-    }
+void DoorvaartVerbodenLeds(void)
+{
+    GROENELEDSUIT;
+    RODELEDSAAN;
+}
 
-    void DoorvaartToegestaanLeds(void)
-    {
-        RODELEDSUIT;
-        GROENELEDSAAN;
-    }
+void DoorvaartToegestaanLeds(void)
+{
+    RODELEDSUIT;
+    GROENELEDSAAN;
+}
 
-    void BrugBuitenGebruik(){
-        RODELEDSAAN;
-        GROENELEDSUIT;
-        GELELEDSAAN;
-    }
+void BrugBuitenGebruik(){
+    RODELEDSAAN;
+    GROENELEDSUIT;
+    GELELEDSAAN;
+}
 
 
