@@ -66,6 +66,21 @@ void slagbomen_open(){
     CONTROLEPANEELSLAGBOOMDICHTLEDUIT;
 }
 
+void knippper_slagboom_lichten(){
+    for(int i = 0; i < 2; i++){
+        SLAGBOOMLED1AAN;
+        SLAGBOOMLED2UIT;
+        _delay_ms(250);
+        SLAGBOOMLED1UIT;
+        SLAGBOOMLED2AAN;
+        _delay_ms(250);
+    }
+
+    SLAGBOOMLED1AAN;
+
+
+}
+
 void leds(){
     if(is_er_verkeer()){
         CONTROLEPANEELVOETGANGERSLEDAAN;
