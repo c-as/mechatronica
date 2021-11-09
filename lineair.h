@@ -53,6 +53,14 @@ void brug_dicht(){
 }
 
 void slagbomen_dicht(){
+    if(is_er_verkeer()){
+        return;
+    }
+
+    if(!is_wind_veilig()){
+        return;
+    }
+
     servo1_set_percentage(100);
     servo2_set_percentage(100);
     slagbomen_zijn_open = false;
