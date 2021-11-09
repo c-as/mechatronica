@@ -63,6 +63,9 @@ void slagbomen_dicht(){
     servo2_set_percentage(100);
     slagbomen_zijn_open = false;
     CONTROLEPANEELSLAGBOOMDICHTLEDAAN;
+
+    SLAGBOOMLED1UIT;
+    SLAGBOOMLED2UIT;
 }
 
 void slagbomen_open(){
