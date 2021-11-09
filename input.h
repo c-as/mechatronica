@@ -71,35 +71,37 @@ void input(){
     }
 
     //check voor voetgangers
-    if(VOETGANGERSSENSORINHOOG && !prev_voetgangers_sensor_in){
+    if(VOETGANGERSSENSORINBLOKKEERD && !prev_voetgangers_sensor_in){
         voetgangers_counter++;
-        prev_boten_sensor_in = true;
+        prev_voetgangers_sensor_in = true;
     }
-    if(!VOETGANGERSSENSORINHOOG && prev_voetgangers_sensor_in){
-        prev_boten_sensor_in = false;
+    if(!VOETGANGERSSENSORINBLOKKEERD && prev_voetgangers_sensor_in){
+        prev_voetgangers_sensor_in = false;
     }
-    if(VOETGANGERSSENSORUITHOOG && !prev_voetgangers_sensor_uit){
+
+    if(VOETGANGERSSENSORUITBLOKKEERD && !prev_voetgangers_sensor_uit){
         voetgangers_counter--;
-        prev_boten_sensor_uit = true;
+        prev_voetgangers_sensor_uit = true;
     }
-    if(!VOETGANGERSSENSORUITHOOG && prev_voetgangers_sensor_uit){
-        prev_boten_sensor_uit = false;
+    if(!VOETGANGERSSENSORUITBLOKKEERD && prev_voetgangers_sensor_uit){
+        prev_voetgangers_sensor_uit = false;
     }
 
 
     //check voor boten
-    if(BOOTSENSORINHOOG && !prev_boten_sensor_in){
+    if(BOOTSENSORINBLOKKEERD && !prev_boten_sensor_in){
         boten_counter++;
         prev_boten_sensor_in = true;
     }
-    if(!BOOTSENSORINHOOG && prev_boten_sensor_in){
+    if(!BOOTSENSORINBLOKKEERD && prev_boten_sensor_in){
         prev_boten_sensor_in = false;
     }
-    if(BOOTSENSORUITHOOG && !prev_boten_sensor_uit){
+
+    if(BOOTSENSORUITBLOKKEERD && !prev_boten_sensor_uit){
         boten_counter--;
         prev_boten_sensor_uit = true;
     }
-    if(!BOOTSENSORUITHOOG && prev_boten_sensor_uit){
+    if(!BOOTSENSORUITBLOKKEERD && prev_boten_sensor_uit){
         prev_boten_sensor_uit = false;
     }
 }
