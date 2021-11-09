@@ -136,6 +136,7 @@ void knoppen(){
 
    if(KNOPSLAGBOMENINGEDRUKT){
         if(slagbomen_zijn_open){
+            knippper_slagboom_lichten();
             slagbomen_dicht();
         } else {
             slagbomen_open();
