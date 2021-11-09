@@ -27,6 +27,8 @@ int boten_counter = 0;
 bool prev_boten_sensor_in = false;
 bool prev_boten_sensor_uit = false;
 
+bool prev_knop_modus = false;
+
 bool schakelaar_modus = false;
 bool schakelaar_open = false;
 bool schakelaar_slagbomen = false;
@@ -57,18 +59,16 @@ void input(){
     }
 
     //check knoppen voor input
-//    if(KNOPMODUSINGEDRUKT){
-//        schakelaar_modus != schakelaar_modus;
-//    }
-//    if(KNOPOPENINGEDRUKT){
-//        schakelaar_open != schakelaar_open;
-//    }
-//    if(KNOPSLAGBOMENINGEDRUKT){
-//        schakelaar_slagbomen != schakelaar_slagbomen;
-//    }
-//    if(KNOPNOODSTOPINGEDRUKT){
-//        noodstop != noodstop;
-//    }
+    if(KNOPMODUSINGEDRUKT && !prev_knop_modus){
+        prev_knop_modus = true;
+        schakelaar_modus = !schakelaar_modus;
+        _delay_ms(10);
+    }
+
+    if(!KNOPMODUSINGEDRUKT && prev_knop_modus){
+        prev_knop_modus = false;
+        _delay_ms(10);
+    }
 
     //check voor voetgangers
     if(VOETGANGERSSENSORINHOOG && !prev_voetgangers_sensor_in){
