@@ -1,17 +1,15 @@
 bool slagbomen_zijn_open = false;
 
 void open_brug(){
-//    while(1){
-//        input();
-//        if(is_er_verkeer()){
-//            break;
-//        }
-//
-//        if(is_wind_veilig()){
-//            return;
-//        }
-//    }
-//    _delay_ms(1000);
+    if(is_er_verkeer()){
+        return;
+    }
+
+    if(!is_wind_veilig()){
+        return;
+    }
+
+    knippper_slagboom_lichten();
 
     slagbomen_dicht();
     CONTROLEPANEELSLAGBOOMDICHTLEDAAN;
