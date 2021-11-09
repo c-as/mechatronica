@@ -124,6 +124,12 @@ void leds(){
 }
 
 void knoppen(){
+    if(KNOPNOODSTOPINGEDRUKT){
+        GELELEDSUIT;
+    } else {
+        GELELEDSAAN;
+    }
+
     if(KNOPOPENINGEDRUKT){
         open_brug();
     }
