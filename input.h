@@ -57,21 +57,18 @@ void input(){
     }
 
     //check knoppen voor input
-    if(KNOPMODUSINGEDRUKT){
-        schakelaar_modus != schakelaar_modus;
-    }
-
-    if(KNOPOPENINGEDRUKT){
-        schakelaar_open != schakelaar_open;
-    }
-
-    if(KNOPSLAGBOMENINGEDRUKT){
-        schakelaar_slagbomen != schakelaar_slagbomen;
-    }
-
-    if(KNOPNOODSTOPINGEDRUKT){
-        noodstop != noodstop;
-    }
+//    if(KNOPMODUSINGEDRUKT){
+//        schakelaar_modus != schakelaar_modus;
+//    }
+//    if(KNOPOPENINGEDRUKT){
+//        schakelaar_open != schakelaar_open;
+//    }
+//    if(KNOPSLAGBOMENINGEDRUKT){
+//        schakelaar_slagbomen != schakelaar_slagbomen;
+//    }
+//    if(KNOPNOODSTOPINGEDRUKT){
+//        noodstop != noodstop;
+//    }
 
     //check voor voetgangers
     if(VOETGANGERSSENSORINHOOG && !prev_voetgangers_sensor_in){
