@@ -8,15 +8,14 @@
 #include "uart.h"
 #include "pins.h"
 #include "input.h"
-#include "status.h"
 #include "servo.h"
 #include "h_bridge.h"
-
+#include "lineair.h"
 
 FILE uart_output = FDEV_SETUP_STREAM(uart_putchar, NULL, _FDEV_SETUP_WRITE);
 FILE uart_input = FDEV_SETUP_STREAM(NULL, uart_getchar, _FDEV_SETUP_READ);
 
-void start_brug()
+int main(void)
 {
     init_leds();
     init_input();
@@ -29,18 +28,7 @@ void start_brug()
     stdout = &uart_output;
     stdin  = &uart_input;
 
-
-    while (1)
-    {
-        input();
-        brug();
-    }
-}
-
-int main(void)
-{
-
-    start_brug();
+    lineair();
 
     return 0;
 }
