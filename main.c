@@ -10,6 +10,7 @@
 #include "input.h"
 #include "servo.h"
 #include "h_bridge.h"
+//#include "status.h"
 #include "lineair.h"
 
 FILE uart_output = FDEV_SETUP_STREAM(uart_putchar, NULL, _FDEV_SETUP_WRITE);
@@ -28,6 +29,7 @@ int main(void)
     stdout = &uart_output;
     stdin  = &uart_input;
 
+    //brug();
     lineair();
 
     return 0;

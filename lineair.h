@@ -9,6 +9,10 @@ void open_brug(){
         return;
     }
 
+    if(KNOPNOODSTOPINGEDRUKT){
+        return;
+    }
+
     knippper_slagboom_lichten();
 
     slagbomen_dicht();
@@ -20,15 +24,35 @@ void open_brug(){
     _delay_ms(1000);
     h_bridge_set_percentage(0);
     CONTROLEPANEELOPENLEDAAN;
-    DoorvaartToegestaanLeds();
+
+    if(!KNOPNOODSTOPINGEDRUKT){
+        DoorvaartToegestaanLeds();
+    } else {
+        GELELEDSAAN;
+    }
 
     _delay_ms(1000);
 
     while(1){
-        if(KNOPOPENINGEDRUKT){
-            brug_dicht();
-            break;
+        input();
+        leds();
+
+        if(schakelaar_modus){
+            if(!is_er_een_boot()){
+                _delay_ms(10000);
+                if(!is_er_een_boot()){
+                    brug_dicht();
+                    break;
+                }
+            }
+        } else {
+            if(KNOPOPENINGEDRUKT && !is_er_een_boot()){
+                brug_dicht();
+                break;
+            }
         }
+
+
     }
 }
 
@@ -55,7 +79,7 @@ void slagbomen_dicht(){
         return;
     }
 
-    if(!is_wind_veilig()){
+    if(KNOPNOODSTOPINGEDRUKT){
         return;
     }
 
@@ -69,6 +93,10 @@ void slagbomen_dicht(){
 }
 
 void slagbomen_open(){
+    if(KNOPNOODSTOPINGEDRUKT){
+        return;
+    }
+
     servo1_set_percentage(-100);
     servo2_set_percentage(-100);
     slagbomen_zijn_open = true;
@@ -76,6 +104,7 @@ void slagbomen_open(){
 }
 
 void knippper_slagboom_lichten(){
+
     for(int i = 0; i < 2; i++){
         SLAGBOOMLED1AAN;
         SLAGBOOMLED2UIT;
@@ -125,14 +154,22 @@ void leds(){
 
 void knoppen(){
     if(KNOPNOODSTOPINGEDRUKT){
-        GELELEDSUIT;
-    } else {
+        DoorvaartVerbodenLeds();
         GELELEDSAAN;
+    } else {
+        GELELEDSUIT;
     }
 
-    if(KNOPOPENINGEDRUKT){
-        open_brug();
+    if(schakelaar_modus){
+        if(is_er_een_boot()){
+            open_brug();
+        }
+    } else {
+        if(KNOPOPENINGEDRUKT){
+            open_brug();
+        }
     }
+
 
    if(KNOPSLAGBOMENINGEDRUKT){
         if(slagbomen_zijn_open){

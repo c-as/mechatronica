@@ -5,7 +5,6 @@
 enum {
     DEK_OPEN,
     DEK_DICHT,
-    DEK_RESET,
     SLAGBOMEN_DICHT,
     SLAGBOMEN_SLUITEN,
     SLAGBOMEN_OPEN,
@@ -17,154 +16,149 @@ enum {
     BEZIG_NOOD,
 };
 
-const int TIJD_KNIPPERLICHT = 1000;
-const int WACHTIJD_BOOT = 10000;
-const int WACHTIJD_SLAGBOMEN = 1000;
+const int TIJD_KNIPPERLICHT = 500;
+const int WACHTIJD_BOOT = 5000;
+const int WACHTIJD_SLAGBOMEN = 5000;
 const int KRACHT_MOTOR_OPENEN = 50;
-const int KRACHT_MOTOR_SLUITEN = 10;
+const int KRACHT_MOTOR_SLUITEN = 30;
+const int TIJD_OPENEN = 1000;
 
-bool auto_reset = true;
-bool noodstop = false;
+bool reset = true;
 
-int status_dek = DEK_RESET;
+int status_dek = DEK_OPEN;
 int status_slagbomen = SLAGBOMEN_RESET;
 int status_bezig = NIET_BEZIG;
 
 int timer_lampen = 0;
 int timer_boot = 0;
 int timer_slagboom = 0;
+int timer_open = 0;
 
 void brug()
 {
-    //geen dedicated noodstop knops
-    if (false){
-        h_bridge_set_percentage(0);
-        noodstop = true;
-        return;
-    }
+    while(1){
+        input();
 
-    if (ISBRUGDICHT) status_dek = DEK_DICHT;
-    else if (ISBRUGOPEN)status_dek = DEK_OPEN;
-    else status_dek = DEK_RESET;
+        if(status_dek == DEK_DICHT){
+            //CONTROLEPANEELOPENLEDUIT;
+        } else {
+            //CONTROLEPANEELOPENLEDAAN;
+        }
 
-    if (SCHAKELAARAAN){
-        //brug staat aan
-        CONTROLEPANEELAANLEDUIT;
-        CONTROLEPANEELNOODSTOPLEDUIT;
 
-        if(SCHAKELAARAUTOMATISCH){
+        if(is_er_een_boot()){
+            CONTROLEPANEELBOTENLEDAAN;
+        } else {
+            CONTROLEPANEELBOTENLEDUIT;
+        }
+
+        if(is_er_verkeer()){
+            CONTROLEPANEELVOETGANGERSLEDAAN;
+        } else {
+            CONTROLEPANEELVOETGANGERSLEDUIT;
+        }
+
+        //geen dedicated noodstop knops
+        if (KNOPNOODSTOPINGEDRUKT){
+            h_bridge_set_percentage(0);
+            GELELEDSAAN;
+            continue;
+        } else {
+            GELELEDSUIT;
+        }
+
+        if (BRUGDICHTLIMITINGEDRUKT) status_dek = DEK_DICHT;
+        else status_dek = DEK_OPEN;
+
+        if(reset){
+            reset = false;
+            DoorvaartVerbodenLeds();
+            open_slagbomen();
+        }
+
+        if(schakelaar_modus){
             //automatische stand
             CONTROLEPANEELAUTOMATISCHLEDAAN;
-
-            if(auto_reset){
-                //opstarten
-                if (status_dek == DEK_DICHT) sluit_brug();
-                else open_brug();
-                auto_reset = false;
-            } else {
-                //autmatische logica
-                switch(status_dek){
-                    case DEK_DICHT:
-                        if (is_er_een_boot()) open_brug();
-                    case DEK_OPEN:
-                        if (is_er_een_boot() && !status_bezig == BEZIG_NOOD) timer_boot = millis;
-                        if (abs(millis - timer_boot) > WACHTIJD_BOOT){
-                            sluit_brug();
-                        }
-                }
+            switch(status_dek){
+                case DEK_DICHT:
+                    if (is_er_een_boot()) open_brug();
+                case DEK_OPEN:
+                    if (is_er_een_boot() && !status_bezig == BEZIG_NOOD) timer_boot = millis;
+                    if (abs(millis - timer_boot) > WACHTIJD_BOOT){
+                        sluit_brug();
+                    }
             }
-
-
         } else {
             //handmatige stand
             CONTROLEPANEELAUTOMATISCHLEDUIT;
-
             if(status_bezig == NIET_BEZIG){
-                if(SCHAKELAAROPEN) open_brug();
+                if(schakelaar_open) open_brug();
                 else sluit_brug();
             }
         }
-    } else {
-        //brug staat uit
-        AlleLedsUit();
-        auto_reset = true;
-        h_bridge_set_percentage(0);
-        status_dek = DEK_RESET;
-        status_bezig = NIET_BEZIG;
-        status_slagbomen = SLAGBOMEN_RESET;
-        CONTROLEPANEELAANLEDAAN;
-        CONTROLEPANEELNOODSTOPLEDAAN;
-        return;
-    }
 
-    if (status_bezig != NIET_BEZIG) CONTROLEPANEELBEZIGLEDAAN;
-    else CONTROLEPANEELBEZIGLEDUIT;
+        if(is_wind_veilig()) CONTROLEPANEELWEERSOMSTANDIGHEDENLEDUIT;
+        else {
+            CONTROLEPANEELWEERSOMSTANDIGHEDENLEDAAN;
 
-    if(status_dek == DEK_DICHT){
-        CONTROLEPANEELOPENLEDUIT;
-    } else {
-        CONTROLEPANEELOPENLEDAAN;
-    }
-
-    if(is_wind_veilig()) CONTROLEPANEELWEERSOMSTANDIGHEDENLEDUIT;
-    else {
-        CONTROLEPANEELWEERSOMSTANDIGHEDENLEDAAN;
-
-        if(SCHAKELAARAUTOMATISCH){
-            if(status_bezig == BEZIG_OPENEN)sluit_brug();
-            if(status_dek == DEK_OPEN ){
-                status_bezig == BEZIG_NOOD;
-                DoorvaartVerbodenLeds();
-            }
-        }
-    }
-
-    switch(status_bezig){
-        case BEZIG_SLUITEN:
-            //brug is dicht gegaan
-            if(status_dek == DEK_DICHT){
-                h_bridge_set_percentage(0);
-                open_slagbomen();
-                DoorvaartGeslotenBrugMetTegenliggers();
-                status_bezig = NIET_BEZIG;
-            }
-        case BEZIG_OPENEN:
-            //brug is open gegaan
-            if (status_dek == DEK_OPEN){
-                h_bridge_set_percentage(0);
-                DoorvaartToegestaanLeds();
-                status_bezig = NIET_BEZIG;
-
-                if(SCHAKELAARAUTOMATISCH){
-                    timer_boot = millis;
+            if(schakelaar_modus){
+                if(status_bezig == BEZIG_OPENEN)sluit_brug();
+                if(status_dek == DEK_OPEN){
+                    status_bezig == BEZIG_NOOD;
+                    DoorvaartVerbodenLeds();
                 }
             }
-        case BEZIG_SLAGBOMEN_SLUITEN:
-            if (status_slagbomen == SLAGBOMEN_DICHT) open_brug_volledig();
-    }
-
-    //knipperlichten
-    if(status_slagbomen == SLAGBOMEN_DICHT || SLAGBOMEN_SLUITEN){
-        if(abs(millis - timer_lampen) > TIJD_KNIPPERLICHT && abs(millis - timer_lampen) < TIJD_KNIPPERLICHT * 2){
-            SLAGBOOMLED1AAN;
-            SLAGBOOMLED2UIT;
         }
 
-        if(abs(millis - timer_lampen) > TIJD_KNIPPERLICHT * 2){
-            SLAGBOOMLED2AAN;
-            SLAGBOOMLED1UIT;
-            timer_lampen = millis;
-        }
-    }
+        switch(status_bezig){
+            case BEZIG_SLUITEN:
+                //brug is dicht gegaan
+                if(status_dek == DEK_DICHT){
+                    h_bridge_set_percentage(0);
+                    open_slagbomen();
+                    DoorvaartVerbodenLeds();
+                    status_bezig = NIET_BEZIG;
+                }
+            case BEZIG_OPENEN:
+                //brug is open gegaan
+                if (abs(millis - timer_open) >= TIJD_OPENEN){
+                    h_bridge_set_percentage(0);
+                    DoorvaartToegestaanLeds();
+                    status_bezig = NIET_BEZIG;
 
-    //wachten totdat brug vrij is
-    if(status_slagbomen == SLAGBOMEN_SLUITEN){
-        if(is_er_verkeer()){
-            timer_slagboom = millis;
+                    if(schakelaar_modus){
+                        timer_boot = millis;
+                    }
+                }
+            case BEZIG_SLAGBOMEN_SLUITEN:
+                if (status_slagbomen == SLAGBOMEN_DICHT) open_brug_volledig();
         }
 
-        if(abs(millis - timer_slagboom) > WACHTIJD_SLAGBOMEN){
-            sluit_slagbomen_volledig();
+        //knipperlichten
+        if(status_slagbomen == SLAGBOMEN_DICHT || SLAGBOMEN_SLUITEN){
+            if(abs(millis - timer_lampen) > TIJD_KNIPPERLICHT && abs(millis - timer_lampen) < TIJD_KNIPPERLICHT * 2){
+                SLAGBOOMLED1AAN;
+                SLAGBOOMLED2UIT;
+            }
+
+            if(abs(millis - timer_lampen) > TIJD_KNIPPERLICHT * 2){
+                SLAGBOOMLED2AAN;
+                SLAGBOOMLED1UIT;
+                timer_lampen = millis;
+            }
+        }
+
+        //wachten totdat brug vrij is
+        if(status_slagbomen == SLAGBOMEN_SLUITEN){
+            if(is_er_verkeer()){
+                timer_slagboom = millis;
+            }
+
+            printf("%d", millis);
+
+            if(abs(millis - timer_slagboom) >= WACHTIJD_SLAGBOMEN){
+                sluit_slagbomen_volledig();
+            }
         }
     }
 }
@@ -172,8 +166,7 @@ void brug()
 void open_brug(){
     if(status_dek == DEK_OPEN) return;
     if(!is_wind_veilig()) return;
-
-    DoorvaartBijnaToegestaanLeds();
+    if(is_er_verkeer()) return;
 
     if(!status_slagbomen == SLAGBOMEN_DICHT){
         sluit_slagbomen();
@@ -194,6 +187,8 @@ void sluit_brug(){
     status_bezig = BEZIG_SLUITEN;
 
     h_bridge_set_percentage(-KRACHT_MOTOR_SLUITEN);
+
+    timer_open = millis;
 }
 
 void open_brug_volledig(){
@@ -213,8 +208,6 @@ void sluit_slagbomen(){
     timer_lampen = millis;
     timer_slagboom = millis;
 
-    ZOEMERAAN;
-
     status_slagbomen = SLAGBOMEN_SLUITEN;
 }
 
@@ -223,8 +216,6 @@ void sluit_slagbomen_volledig(){
 
     servo1_set_percentage(100);
     servo2_set_percentage(100);
-
-    ZOEMERUIT;
 
     status_slagbomen = SLAGBOMEN_DICHT;
 }
@@ -235,9 +226,7 @@ void open_slagbomen(){
     servo1_set_percentage(-100);
     servo2_set_percentage(-100);
 
-    ZOEMERUIT;
-
-    _delay_ms(1000);
+    _delay_ms(500);
 
     status_slagbomen = SLAGBOMEN_OPEN;
 }

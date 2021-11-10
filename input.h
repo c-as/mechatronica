@@ -6,7 +6,7 @@
 //brug_dicht = port
 //brug_open = port
 
-#define WINDMETERHOOG PINA & (1 << 1)
+#define WINDMETERHOOG PINL & (1 << 0)
 #define BRUGDICHTLIMITINGEDRUKT PINC & (1 << 4)
 #define VOETGANGERSSENSORINBLOKKEERD !(PINA & (1 << 5))
 #define VOETGANGERSSENSORUITBLOKKEERD !(PINC & (1 << 6))
@@ -28,6 +28,7 @@ bool prev_boten_sensor_in = false;
 bool prev_boten_sensor_uit = false;
 
 bool prev_knop_modus = false;
+bool prev_knop_open = false;
 
 bool schakelaar_modus = false;
 bool schakelaar_open = false;
@@ -59,14 +60,24 @@ void input(){
     }
 
     //check knoppen voor input
+    //knop modus
     if(KNOPMODUSINGEDRUKT && !prev_knop_modus){
         prev_knop_modus = true;
         schakelaar_modus = !schakelaar_modus;
         _delay_ms(10);
     }
-
     if(!KNOPMODUSINGEDRUKT && prev_knop_modus){
         prev_knop_modus = false;
+        _delay_ms(10);
+    }
+    //knop open
+    if(KNOPOPENINGEDRUKT && !prev_knop_open){
+        prev_knop_open = true;
+        schakelaar_open = !schakelaar_open;
+        _delay_ms(10);
+    }
+    if(!KNOPOPENINGEDRUKT && prev_knop_open){
+        prev_knop_open = false;
         _delay_ms(10);
     }
 
@@ -107,7 +118,7 @@ void input(){
 }
 
 bool is_wind_veilig(){
-    return current_rpm < 1;
+    return current_rpm < 100;
 }
 
 bool is_er_een_boot(){
