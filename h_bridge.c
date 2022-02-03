@@ -83,6 +83,7 @@ void h_bridge_set_percentage(signed char percentage)
 			// Disable RPWM, calculate LPWM
 			OCR0A = 0;
 			OCR0B = (255*percentage)/-100;
+			//OCR0z = 0;
 		}
 	}
 }
